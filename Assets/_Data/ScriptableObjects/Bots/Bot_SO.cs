@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "New Bot", menuName = "Bot Type")]
 public class BotData : ScriptableObject {
 
     [SerializeField] private float moveSpeed = 100.0f;
