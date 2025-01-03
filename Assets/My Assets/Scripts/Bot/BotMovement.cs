@@ -29,7 +29,8 @@ namespace GolfBots.Bots {
 
         // Update is called once per frame
         void Update() {
-            UpdateJumpTimer();
+            if (canJump)
+                UpdateJumpTimer();
         }
 
         void FixedUpdate() {

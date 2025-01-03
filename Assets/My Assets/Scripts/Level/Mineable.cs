@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace GolfBots.Level {
@@ -7,6 +5,9 @@ namespace GolfBots.Level {
     {
         public void Mine() {
             Debug.Log("Mining " + this.name);
+
+            // Sound FX?
+            // Particle FX?
 
             Destroy(this.gameObject);
         }
