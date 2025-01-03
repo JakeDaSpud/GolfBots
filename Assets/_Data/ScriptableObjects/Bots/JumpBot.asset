@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0775d951aadede143933daf45eb4a9cd, type: 3}
   m_Name: JumpBot
   m_EditorClassIdentifier: 
-  moveSpeed: 75
+  moveSpeed: 1
   maxReflections: 2
   canJump: 1
   jumpInterval: 20

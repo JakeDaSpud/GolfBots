@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0775d951aadede143933daf45eb4a9cd, type: 3}
   m_Name: MinerBot
   m_EditorClassIdentifier: 
-  moveSpeed: 100
+  moveSpeed: 3
   maxReflections: 3
   canJump: 0
   jumpInterval: 20
