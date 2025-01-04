@@ -7,5 +7,6 @@ public class BotData : ScriptableObject {
     [SerializeField] public int maxReflections = 3;
     
     [SerializeField] public bool canJump = false;
+    [SerializeField] public float jumpPower = 10.0f;
     [SerializeField] public float jumpInterval = 20.0f;
 }

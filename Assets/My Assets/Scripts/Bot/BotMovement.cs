@@ -14,6 +14,7 @@ namespace GolfBots.Bots {
 
         private bool canJump;
         private float jumpInterval;
+        private float jumpPower;
         private float jumpTimer;
 
         // Start is called before the first frame update
@@ -24,6 +25,7 @@ namespace GolfBots.Bots {
 
             this.canJump = botData.canJump;
             this.jumpInterval = botData.jumpInterval;
+            this.jumpPower = botData.jumpPower;
             this.jumpTimer = this.jumpInterval;
         }
 
