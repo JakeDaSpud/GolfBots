@@ -2,25 +2,20 @@ using UnityEngine;
 
 namespace GD.Selection
 {
+    // This is adapted from Niall's AdvancedSelectionManager
+
     /// <summary>
     /// Allows us to attach multiple responses to a selected object
     /// </summary>
-    public class AdvancedSelectionManager : MonoBehaviour
+    public class AimRaycastManager : MonoBehaviour
     {
-        [SerializeField]
-        private IRayProvider rayProvider;
-
-        [SerializeField]
-        private ISelector selector;
-
-        [SerializeField]
-        private ISelectionResponse response;
-
+        [SerializeField] private IRayProvider rayProvider;
+        [SerializeField] private ISelector selector;
+        [SerializeField] private ISelectionResponse response;
         private Transform currentSelection;
 
         // Awake is called when the script instance is being loaded
-        private void Awake()
-        {
+        private void Awake() {
             //get a ray provider
             rayProvider = GetComponent<IRayProvider>();
 
@@ -31,8 +26,7 @@ namespace GD.Selection
             response = GetComponent<ISelectionResponse>();
         }
 
-        private void Update()
-        {
+        private void Update() {
             //set de-selected
             if (currentSelection != null)
                 response.OnDeselect(currentSelection);
