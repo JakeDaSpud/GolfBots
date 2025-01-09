@@ -4,10 +4,13 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
+namespace GolfBots.Player {
+    
 public class PlayerController : MonoBehaviour {
     // Adapted from Brackey's NavMesh Tutorial
     // https://www.youtube.com/watch?v=CHV1ymlw-P8
 
+    [SerializeField] private PlayerBotInventoryController inventory;
     [SerializeField] public Camera cam;
     private PlayerInputs actions;
     // This didn't work out, I couldn't use the bool out of this for checking how I wanted in my AimRaycastController.cs class
@@ -45,16 +48,17 @@ public class PlayerController : MonoBehaviour {
     void Aim(InputAction.CallbackContext context) {
         isHoldingAim = true;
         Debug.Log("Aiming Started");
-        //GetComponent<LineRenderer>().enabled = true;
     }
 
     void AimCanceled(InputAction.CallbackContext context) {
         isHoldingAim = false;
+        inventory.SendCurrentBot();
         Debug.Log("Aiming Stopped");
-        //GetComponent<LineRenderer>().enabled = false;
     }
 
     void OnRestart() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+}
+
 }

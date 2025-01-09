@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 9024709769604185143}
   - component: {fileID: 8325334762226045980}
   - component: {fileID: 1314674989205588376}
+  - component: {fileID: 4054820848095184626}
   - component: {fileID: 2130279137759738175}
   - component: {fileID: 337308667847119957}
   - component: {fileID: 8987284159924266561}
@@ -187,6 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbd91886e97a9204ab60efd5a0dd0e28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: {fileID: 4054820848095184626}
   cam: {fileID: 0}
   isHoldingAim: 0
 --- !u!114 &1314674989205588376
@@ -206,6 +208,19 @@ MonoBehaviour:
   reflectionStart: {fileID: 4640946170494281897}
   maxReflectionDistance: 100
   maxAimReflections: 3
+--- !u!114 &4054820848095184626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7547254176495843711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f43f92fa7bb6ebe4c9adf0b762df7ce9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 0}
 --- !u!54 &2130279137759738175
 Rigidbody:
   m_ObjectHideFlags: 0
