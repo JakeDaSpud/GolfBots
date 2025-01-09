@@ -28,6 +28,7 @@ namespace GolfBots.Level {
 
         void DoneOpening() {
             Debug.Log("Done Opening Door " + id);
+            transform.DOKill();
             Destroy(this.gameObject);
         }
     }
