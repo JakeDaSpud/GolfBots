@@ -19,18 +19,24 @@ public class PlayerController : MonoBehaviour {
 
     void Awake() {
         actions = new PlayerInputs();
+
+        if (inventory == null)
+            Debug.Log("Inventory is not assigned.");
     }
 
     void OnEnable() {
         actions.Player.Aim.Enable();
         actions.Player.Aim.performed += Aim;
         actions.Player.Aim.canceled += AimCanceled;
+        actions.Player.Scroll.Enable();
+        actions.Player.Scroll.performed += NextBot;
     }
 
     void OnDisable() {
         actions.Player.Aim.performed -= Aim;
         actions.Player.Aim.canceled -= AimCanceled;
         actions.Player.Aim.Disable();
+        actions.Player.Scroll.Disable();
     }
 
     /// <summary>
@@ -54,6 +60,11 @@ public class PlayerController : MonoBehaviour {
         isHoldingAim = false;
         inventory.SendCurrentBot();
         Debug.Log("Aiming Stopped");
+    }
+
+    void NextBot(InputAction.CallbackContext context) {
+        inventory.NextBot();
+        Debug.Log("Switching to next Bot");
     }
 
     void OnRestart() {

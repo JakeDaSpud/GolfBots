@@ -12,7 +12,6 @@ namespace GolfBots.Player {
 
         [SerializeField] private float maxReflectionDistance = 100f;
         [SerializeField] private int maxAimReflections = 3;
-        private int currentAimReflections = 0;
 
         // Some Line Renderer Code was adapted from this video https://youtu.be/5ZBynjAsfwI?si=ToMuwr1NGvbByHtJ
 
@@ -52,11 +51,6 @@ namespace GolfBots.Player {
                 lr.enabled = false;
             }
         }
-
-        /*public void SetUpLine() {
-            aimPoints = FindReflection(reflectionStart.position, reflectionStart.forward);
-            lr.positionCount = aimPoints.Length;
-        }*/
 
         // Physics Code adapted from https://stackoverflow.com/questions/51931455/unity3d-bouncing-reflecting-raycast
         /// <summary>

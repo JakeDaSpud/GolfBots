@@ -5,7 +5,8 @@ using GolfBots.Bots;
 namespace GolfBots.Player {
 
 public class PlayerBotInventoryController : MonoBehaviour {
-    [SerializeField] private PlayerController playerController;
+
+    [SerializeField] private BotManager botManager;
 
     private Dictionary<BotType, int> currentBots = new Dictionary<BotType, int> {
         {BotType.MineBot, 0},
@@ -25,10 +26,12 @@ public class PlayerBotInventoryController : MonoBehaviour {
     public void NextBot() {
         if (currentBot == BotType.MineBot) {
             currentBot = BotType.JumpBot;
+            Debug.Log("Current Bot is now JumpBot");
         }
 
         else {
             currentBot = BotType.MineBot;
+            Debug.Log("Current Bot is now MineBot");
         }
     }
 
@@ -37,8 +40,9 @@ public class PlayerBotInventoryController : MonoBehaviour {
         if (currentBots[currentBot] > 0) {
             Debug.Log("Sending " + currentBot + ".");
         
+            // Hardcoded "for now"
             // Raise GameEvent with bot type
-            //event
+            botManager.SendBot(currentBot);
             
             // Remove currentBot
             currentBots[currentBot]--;
