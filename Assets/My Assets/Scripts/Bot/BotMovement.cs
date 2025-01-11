@@ -11,7 +11,7 @@ namespace GolfBots.Bots {
         private int currentReflections;
         public Queue<Vector3> aimPoints = new Queue<Vector3>(); // Where this Bot will travel to
         private bool hasAimPointsSet = false;
-        [SerializeField] private float closePointApproximationValue = 0.002f; // How close you have to be in all 3 Axes of a Vector3 to be considered "close"
+        private float closePointApproximationValue = 0.2f; // How close you have to be in all 3 Axes of a Vector3 to be considered "close"
         private Vector3 currentDestination;
 
         private bool canJump;
@@ -41,7 +41,6 @@ namespace GolfBots.Bots {
 
         void FixedUpdate() {
             if (aimPoints.Count > 0) {
-                Debug.Log("45");
                 TravelToPoint();
             }
             
@@ -60,7 +59,6 @@ namespace GolfBots.Bots {
             
             for (int i = 0; i < aimPoints.Length; i++) {
                 Debug.Log($"Point {i} : {aimPoints[i]}");
-                aimPoints[i].y = this.transform.position.y;
                 this.aimPoints.Enqueue(aimPoints[i]);
                 Debug.Log("Added Point " + i);
             }
@@ -106,6 +104,7 @@ namespace GolfBots.Bots {
 
             // Moving forward
             //transform.position += transform.forward * Time.fixedDeltaTime * moveSpeed;
+            currentDestination.y = this.transform.position.y;
             Vector3 direction = (currentDestination - transform.position).normalized;
             Debug.Log($"Direction to move: {direction}");
 
