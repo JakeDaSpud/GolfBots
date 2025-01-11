@@ -15,4 +15,5 @@ MonoBehaviour:
   moveSpeed: 3
   maxReflections: 3
   canJump: 0
+  jumpPower: 10
   jumpInterval: 20

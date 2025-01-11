@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
@@ -10,7 +9,6 @@ public class PlayerController : MonoBehaviour {
     // Adapted from Brackey's NavMesh Tutorial
     // https://www.youtube.com/watch?v=CHV1ymlw-P8
 
-    [SerializeField] private PlayerBotInventoryController inventory;
     [SerializeField] public Camera cam;
     private PlayerInputs actions;
     // This didn't work out, I couldn't use the bool out of this for checking how I wanted in my AimRaycastController.cs class
@@ -19,9 +17,6 @@ public class PlayerController : MonoBehaviour {
 
     void Awake() {
         actions = new PlayerInputs();
-
-        if (inventory == null)
-            Debug.Log("Inventory is not assigned.");
     }
 
     void OnEnable() {
@@ -36,6 +31,7 @@ public class PlayerController : MonoBehaviour {
         actions.Player.Aim.performed -= Aim;
         actions.Player.Aim.canceled -= AimCanceled;
         actions.Player.Aim.Disable();
+        actions.Player.Scroll.performed -= NextBot;
         actions.Player.Scroll.Disable();
     }
 
@@ -58,17 +54,23 @@ public class PlayerController : MonoBehaviour {
 
     void AimCanceled(InputAction.CallbackContext context) {
         isHoldingAim = false;
-        inventory.SendCurrentBot();
+
+        // If is standing on correct ground
+        if (true) {
+            Debug.Log("ADD THE GROUND CHECK");
+            GolfBots.State.EventManager.Instance.RaiseSetupBot();
+        }
+
         Debug.Log("Aiming Stopped");
     }
 
     void NextBot(InputAction.CallbackContext context) {
-        inventory.NextBot();
+        GolfBots.State.EventManager.Instance.RaiseNextBot();
         Debug.Log("Switching to next Bot");
     }
 
     void OnRestart() {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        GolfBots.State.EventManager.Instance.RaiseRespawn();
     }
 }
 

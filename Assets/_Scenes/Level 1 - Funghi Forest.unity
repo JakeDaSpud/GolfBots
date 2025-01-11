@@ -3265,6 +3265,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MineBot
       objectReference: {fileID: 0}
+    - target: {fileID: 3864345917645375524, guid: 37971ec5f73c85f4d99b8d2e4847223e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4441926860393432527, guid: 37971ec5f73c85f4d99b8d2e4847223e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.8201604

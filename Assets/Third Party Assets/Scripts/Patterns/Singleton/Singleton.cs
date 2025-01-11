@@ -22,17 +22,15 @@ namespace GD
         {
             get
             {
-                instance = FindFirstObjectByType<T>();
-                if (instance != null)
-                {
-                    return instance;
-                }
-                else
-                {
-                    GameObject obj = new GameObject();              //create an object to be added to the scene
-                    obj.name = typeof(T).ToString();                //give it a name based on class name
-                    obj.hideFlags = HideFlags.HideAndDontSave;      //uncomment to hide in Hierarchy window and dont save across scenes
-                    instance = obj.AddComponent<T>();               //add the singleton to the scene object
+                if (instance == null) {
+                    instance = FindFirstObjectByType<T>();
+                    if (instance == null)
+                    {
+                        GameObject obj = new GameObject();              //create an object to be added to the scene
+                        obj.name = typeof(T).ToString();                //give it a name based on class name
+                        obj.hideFlags = HideFlags.HideAndDontSave;      //uncomment to hide in Hierarchy window and dont save across scenes
+                        instance = obj.AddComponent<T>();               //add the singleton to the scene object
+                    }
                 }
                 return instance;
             }
@@ -41,20 +39,16 @@ namespace GD
         protected virtual void Awake()
         {
             // Ensure only one instance exists
-            if (Instance != this)
+            if (instance == null)
             {
+                instance = this as T;
+                // Optionally, keep this object across scenes
+                DontDestroyOnLoad(gameObject);
+            }
+
+            else if (instance != this) {
                 Destroy(gameObject);
-                return;
             }
-
-            // Ensure the GameObject is at the root of the hierarchy
-            if (transform.parent != null)
-            {
-                transform.SetParent(null); // Detach from any parent
-            }
-
-            // Optionally, keep this object across scenes
-            DontDestroyOnLoad(gameObject);
         }
 
         private void OnDestroy()

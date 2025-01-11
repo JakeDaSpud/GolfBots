@@ -1,4 +1,6 @@
 using System;
+using GolfBots.Bots;
+using GolfBots.State;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,6 +15,8 @@ namespace GolfBots.Player {
         [SerializeField] private float maxReflectionDistance = 100f;
         [SerializeField] private int maxAimReflections = 3;
 
+        private Vector3[] aimPoints;
+
         // Some Line Renderer Code was adapted from this video https://youtu.be/5ZBynjAsfwI?si=ToMuwr1NGvbByHtJ
 
         private void Awake() {
@@ -21,6 +25,18 @@ namespace GolfBots.Player {
 
             if (lr == null)
                 Debug.Log("Line Renderer not assigned.");
+        }
+
+        void OnEnable() {
+            GolfBots.State.EventManager.Instance.OnBotTypeSet += SendAimPoints;
+        }
+
+        void OnDisable() {
+            GolfBots.State.EventManager.Instance.OnBotTypeSet -= SendAimPoints;
+        }
+
+        private void SendAimPoints(GolfBots.Bots.BotType type) {
+            GolfBots.State.EventManager.Instance.RaiseBotAimPointsSet(aimPoints);
         }
 
         void Update() {
@@ -42,7 +58,8 @@ namespace GolfBots.Player {
 
                 mousePosition.y = reflectionStart.position.y;
 
-                Vector3[] aimPoints = FindReflection(reflectionStart.position, (mousePosition - reflectionStart.position).normalized);
+                // This resets aimPoints everytime isHoldingAim is true
+                aimPoints = FindReflection(reflectionStart.position, (mousePosition - reflectionStart.position).normalized);
                 lr.positionCount = aimPoints.Length;
                 lr.SetPositions(aimPoints);
             }
@@ -92,40 +109,5 @@ namespace GolfBots.Player {
             Array.Resize(ref reflectionPoints, reflections + 1);
             return reflectionPoints;
         }
-
-        /*private Vector3[] FindReflection(Vector3 position, Vector3 direction) {
-            
-            Vector3[] aimPoints = new Vector3[maxAimReflections + 1];
-            aimPoints[0] = position;
-
-            int reflectionCount = 0;
-            Vector3 currentDirection = direction;
-            Vector3 currentPosition = position;
-
-            if (currentAimReflections <= maxAimReflections) {
-
-                currentAimReflections++;
-
-                Vector3 startingPosition = position;
-
-                Ray ray = new Ray(position, direction);
-                RaycastHit hit;
-
-                if (Physics.Raycast(ray, out hit, maxReflectionDistance)) {
-                    direction = Vector3.Reflect(direction, hit.normal);
-                    position = hit.point;
-                }
-
-                else {
-                    position += direction * maxReflectionDistance;
-                }
-
-                Debug.DrawLine(startingPosition, position, Color.magenta);
-
-                FindReflection(position, direction);
-            }
-            
-            return aimPoints;
-        }*/
     }
 }

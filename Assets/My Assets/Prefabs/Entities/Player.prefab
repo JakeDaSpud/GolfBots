@@ -188,7 +188,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbd91886e97a9204ab60efd5a0dd0e28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 4054820848095184626}
   cam: {fileID: 0}
   isHoldingAim: 0
 --- !u!114 &1314674989205588376
@@ -220,7 +219,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f43f92fa7bb6ebe4c9adf0b762df7ce9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 0}
+  MineBotPrefab: {fileID: 3864345917645375524, guid: 37971ec5f73c85f4d99b8d2e4847223e, type: 3}
+  JumpBotPrefab: {fileID: 4680496044247902646, guid: 57118021afd26a749bf7d83eef1fa0b4, type: 3}
 --- !u!54 &2130279137759738175
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -6,24 +6,38 @@ namespace GolfBots.Player {
 
 public class PlayerBotInventoryController : MonoBehaviour {
 
-    [SerializeField] private BotManager botManager;
+    [SerializeField] private GameObject MineBotPrefab;
+    [SerializeField] private GameObject JumpBotPrefab;
+
+    private Dictionary<BotType, GameObject> botPrefabs;
 
     private Dictionary<BotType, int> currentBots = new Dictionary<BotType, int> {
-        {BotType.MineBot, 0},
+        {BotType.MineBot, 1},
         {BotType.JumpBot, 0}
     };
 
     private BotType currentBot = BotType.MineBot;
 
+    void Awake() {
+        botPrefabs = new Dictionary<BotType, GameObject> {
+            {BotType.MineBot, MineBotPrefab},
+            {BotType.JumpBot, JumpBotPrefab}
+        };
+    }
+
     void OnEnable() {
-        // GameEvent listener, setBotInventory which will take in an array like {"Mine", "Mine", "Jump"} and set the inventory to be that
+        GolfBots.State.EventManager.Instance.OnSetupBot += SendCurrentBot;
+        GolfBots.State.EventManager.Instance.OnNextBot += NextBot;
+        GolfBots.State.EventManager.Instance.OnBotAimPointsSet += SpawnBot;
     }
 
     void OnDisable() {
-
+        GolfBots.State.EventManager.Instance.OnSetupBot -= SendCurrentBot;
+        GolfBots.State.EventManager.Instance.OnNextBot -= NextBot;
+        GolfBots.State.EventManager.Instance.OnBotAimPointsSet -= SpawnBot;
     }
 
-    public void NextBot() {
+    private void NextBot() {
         if (currentBot == BotType.MineBot) {
             currentBot = BotType.JumpBot;
             Debug.Log("Current Bot is now JumpBot");
@@ -35,14 +49,14 @@ public class PlayerBotInventoryController : MonoBehaviour {
         }
     }
 
-    public void SendCurrentBot() {
+    private void SendCurrentBot() {
         // Check if enough of current selected bot
         if (currentBots[currentBot] > 0) {
             Debug.Log("Sending " + currentBot + ".");
         
             // Hardcoded "for now"
             // Raise GameEvent with bot type
-            botManager.SendBot(currentBot);
+            GolfBots.State.EventManager.Instance.RaiseBotTypeSet(currentBot);
             
             // Remove currentBot
             currentBots[currentBot]--;
@@ -52,6 +66,14 @@ public class PlayerBotInventoryController : MonoBehaviour {
             Debug.Log("There are no " + currentBot + "s to send.");
             // Play deny sfx?
         }
+    }
+
+    private void SpawnBot(Vector3[] aimPoints) {
+
+        GameObject botToSpawn = botPrefabs[currentBot];
+        
+        GameObject spawnedBot = Instantiate(botToSpawn, this.gameObject.transform.position, this.gameObject.transform.rotation);
+        spawnedBot.GetComponent<BotMovement>().SetAimPoints(aimPoints);
     }
 }
 
