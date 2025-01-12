@@ -5,11 +5,15 @@ using DG.Tweening;
 namespace GolfBots.Level {
     public class Door : MonoBehaviour {
         
-        [SerializeField] private int id;
+        [SerializeField] private int id = 0;
         private bool shouldOpen = false;
 
-        void Start() {
-            Button.onButtonPressed.AddListener(OpenIfIdMatches);
+        void OnEnable() {
+            GolfBots.State.EventManager.Instance.OnButtonPress += OpenIfIdMatches;
+        }
+
+        void OnDisable() {
+            GolfBots.State.EventManager.Instance.OnButtonPress -= OpenIfIdMatches;
         }
 
         void Update() {

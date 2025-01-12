@@ -1,14 +1,14 @@
-using GolfBots;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-namespace GD.State
-{
+namespace GD.State {
     /// <summary>
     /// Manages the game state by evaluating win and loss conditions.
     /// </summary>
     public class StateManager : MonoBehaviour {
+
         [FoldoutGroup("Timing & Reset")]
         [SerializeField]
         [Tooltip("Reset all conditions on start")]
@@ -27,7 +27,9 @@ namespace GD.State
         [FoldoutGroup("Context")]
         [SerializeField]
         [Tooltip("Player Spawn Points to teleport the Player to")]
-        private List<GolfBots.Level.SpawnPoint> spawnPoints;
+        private GolfBots.Level.SpawnPoint[] spawnPoints;
+
+        private int currentLevel = 1;
 
         /// <summary>
         /// The condition that determines if the player wins.
@@ -50,6 +52,27 @@ namespace GD.State
         [Tooltip("Set of optional conditions related to achievements")]
         private List<ConditionBase> achievementConditions;
 
+        void OnEnable() {
+            GolfBots.State.EventManager.Instance.OnButtonPress += SetPlayerSpawnPoint;
+            GolfBots.State.EventManager.Instance.OnRespawn += RespawnPlayer;
+        }
+
+        void OnDisable() {
+            GolfBots.State.EventManager.Instance.OnButtonPress -= SetPlayerSpawnPoint;
+            GolfBots.State.EventManager.Instance.OnRespawn -= RespawnPlayer;
+        }
+
+        void SetPlayerSpawnPoint(int doorID) {
+            player.SetSpawnPoint(spawnPoints[doorID-1].transform.position);
+        }
+
+        void RespawnPlayer() {
+            // .Warp()
+            player.GetComponent<NavMeshAgent>().Warp(spawnPoints[currentLevel-1].transform.position);
+
+            // .SetInventory()
+        }
+
         /// <summary>
         /// Indicates whether the game has ended.
         /// </summary>
@@ -62,11 +85,16 @@ namespace GD.State
             if (player == null)
                 throw new System.Exception("Player reference is required!");
 
+            SetPlayerSpawnPoint(1);
+
             if (inventory == null)
                 throw new System.Exception("Player Bot Inventory reference is required!");
 
+            if (spawnPoints.Length == 0)
+                throw new System.Exception("Player Spawn Points required!");
+
             // Wrap the two objects inside the context envelope
-            conditionContext = new GolfBots.State.ConditionContext(player, inventory);
+            conditionContext = new GolfBots.State.ConditionContext(player, inventory, spawnPoints);
         }
 
         private void OnDestroy() { }

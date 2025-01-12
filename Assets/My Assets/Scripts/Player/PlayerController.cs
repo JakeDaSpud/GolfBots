@@ -14,6 +14,11 @@ public class PlayerController : MonoBehaviour {
     // This didn't work out, I couldn't use the bool out of this for checking how I wanted in my AimRaycastController.cs class
     // public UnityEvent<bool> HoldingAim = new UnityEvent<bool>();
     public bool isHoldingAim = false;
+    private Vector3 spawnPoint;
+
+    public void SetSpawnPoint(Vector3 spawnPoint) {
+        this.spawnPoint = spawnPoint;
+    }
 
     void Awake() {
         actions = new PlayerInputs();
@@ -31,6 +36,8 @@ public class PlayerController : MonoBehaviour {
         actions.Player.Aim.canceled += AimCanceled;
         actions.Player.Scroll.Enable();
         actions.Player.Scroll.performed += NextBot;
+        actions.Player.Restart.Enable();
+        actions.Player.Restart.performed += Restart;
     }
 
     void OnDisable() {
@@ -39,6 +46,8 @@ public class PlayerController : MonoBehaviour {
         actions.Player.Aim.Disable();
         actions.Player.Scroll.performed -= NextBot;
         actions.Player.Scroll.Disable();
+        actions.Player.Restart.performed -= Restart;
+        actions.Player.Restart.Disable();
     }
 
     /// <summary>
@@ -89,7 +98,7 @@ public class PlayerController : MonoBehaviour {
         Debug.Log("Switching to next Bot");
     }
 
-    void OnRestart() {
+    void Restart(InputAction.CallbackContext context) {
         GolfBots.State.EventManager.Instance.RaiseRespawn();
     }
 }
