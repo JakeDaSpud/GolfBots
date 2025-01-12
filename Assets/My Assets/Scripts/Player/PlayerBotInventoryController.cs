@@ -16,6 +16,11 @@ public class PlayerBotInventoryController : MonoBehaviour {
         {BotType.JumpBot, 0}
     };
 
+    [SerializeField] private GolfBots.Level.LevelInventorySetup[] levelInventories; // All Level Inventory Setups
+
+    /// <summary>
+    /// The current Bot that's next to Aim / Send
+    /// </summary>
     private BotType currentBot = BotType.MineBot;
 
     void Awake() {
@@ -25,16 +30,38 @@ public class PlayerBotInventoryController : MonoBehaviour {
         };
     }
 
+    private void SetInventory(int newInventoryID) {
+        Debug.Log($"Setting inventory from button press {newInventoryID}");
+        currentBots[BotType.MineBot] = levelInventories[newInventoryID].MineBotCount;
+        currentBots[BotType.JumpBot] = levelInventories[newInventoryID].JumpBotCount;
+    }
+
+    private void SetInventory(GolfBots.Level.LevelInventorySetup newInventory) {
+        Debug.Log($"Setting inventory from Reset: {newInventory}");
+        currentBots[BotType.MineBot] = newInventory.MineBotCount;
+        currentBots[BotType.JumpBot] = newInventory.JumpBotCount;
+    }
+
+    private void RefillInventory(int levelID) {
+        SetInventory(levelID);
+    }
+
     void OnEnable() {
         GolfBots.State.EventManager.Instance.OnSetupBot += SendCurrentBot;
         GolfBots.State.EventManager.Instance.OnNextBot += NextBot;
         GolfBots.State.EventManager.Instance.OnBotAimPointsSet += SpawnBot;
+        GolfBots.State.EventManager.Instance.OnResetInventory += SetInventory;
+        GolfBots.State.EventManager.Instance.OnButtonPress += SetInventory;
+        GolfBots.State.EventManager.Instance.OnRefillInventory += RefillInventory;
     }
 
     void OnDisable() {
         GolfBots.State.EventManager.Instance.OnSetupBot -= SendCurrentBot;
         GolfBots.State.EventManager.Instance.OnNextBot -= NextBot;
         GolfBots.State.EventManager.Instance.OnBotAimPointsSet -= SpawnBot;
+        GolfBots.State.EventManager.Instance.OnResetInventory -= SetInventory;
+        GolfBots.State.EventManager.Instance.OnButtonPress -= SetInventory;
+        GolfBots.State.EventManager.Instance.OnRefillInventory -= RefillInventory;
     }
 
     private void NextBot() {

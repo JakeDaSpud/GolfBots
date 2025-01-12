@@ -14,6 +14,8 @@ public class EventManager : GD.Singleton<EventManager> {
     public event Action<int> OnButtonPress; // int is Door/Button ID; Level Completed, should change Player's Inventory and Restart / Respawn Point
     public event Action OnRespawn; // On R Press, should remake Player's Inventory and Respawn from last set Respawn Point
     public event Action OnGameFinish; // Final Level Completed, should show the Player's Final Stat Screen
+    public event Action<GolfBots.Level.LevelInventorySetup> OnResetInventory; // On Button Press & Restart, should give Player the given level's Inventory
+    public event Action<int> OnRefillInventory; // On Restart, should give Player the current level's Inventory
 
     // Player Events
     public event Action OnSetupBot; // Signals that a Bot should be set up, for Spawning in front of the Player
@@ -26,6 +28,8 @@ public class EventManager : GD.Singleton<EventManager> {
     public void RaiseButtonPress(int doorID) { OnButtonPress?.Invoke(doorID); }
     public void RaiseRespawn() { OnRespawn?.Invoke(); }
     public void RaiseGameFinish() { OnGameFinish?.Invoke(); }
+    public void RaiseResetInventory(GolfBots.Level.LevelInventorySetup newInventory) { OnResetInventory?.Invoke(newInventory); }
+    public void RaiseRefillInventory(int levelID) { OnRefillInventory?.Invoke(levelID); }
 
     public void RaiseSetupBot() { OnSetupBot?.Invoke(); }
     public void RaiseBotTypeSet(GolfBots.Bots.BotType type) { OnBotTypeSet?.Invoke(type); }

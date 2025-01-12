@@ -33,6 +33,14 @@ namespace GolfBots.Bots {
             //this.gameObject.GetComponent<Rigidbody>().useGravity = false;
         }
 
+        private void OnEnable() {
+            GolfBots.State.EventManager.Instance.OnRespawn += Die;
+        }
+
+        private void OnDisable() {
+            GolfBots.State.EventManager.Instance.OnRespawn -= Die;
+        }
+
         // Update is called once per frame
         void Update() {
             if (canJump)
@@ -46,7 +54,12 @@ namespace GolfBots.Bots {
             
             else {
                 //Debug.Log($"Bot destroyed: AimPoints.Count is {aimPoints.Count}");
-                Destroy(gameObject);
+                Die();
+            }
+
+            if (this.transform.position.y < 0) {
+                Debug.Log("Bot too far down");
+                Die();
             }
         }
 
@@ -85,7 +98,7 @@ namespace GolfBots.Bots {
         private void TravelToPoint() {
             // If arrived at current point
             if (isClose(currentDestination)) {
-                Debug.Log("Reached point: " + currentDestination);
+                //Debug.Log("Reached point: " + currentDestination);
 
                 if (aimPoints.Count > 1) {
                     // Set next in queue
@@ -96,8 +109,8 @@ namespace GolfBots.Bots {
                 }
 
                 else {
-                    Debug.Log("No more Points to travel to, destroying this");
-                    Destroy(this.gameObject);
+                    Debug.Log("No more Points to travel to, destroying this Bot");
+                    Die();
                     return;
                 }
             }
@@ -127,6 +140,13 @@ namespace GolfBots.Bots {
                 Jump();
                 this.jumpTimer = this.jumpInterval; // Reset timer
             }
+        }
+
+        /// <summary>
+        /// This Bot's "Exit" Sequence
+        /// </summary>
+        private void Die() {
+            Destroy(gameObject);
         }
 
         void Jump() {

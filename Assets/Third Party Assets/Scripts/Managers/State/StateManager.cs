@@ -29,7 +29,7 @@ namespace GD.State {
         [Tooltip("Player Spawn Points to teleport the Player to")]
         private GolfBots.Level.SpawnPoint[] spawnPoints;
 
-        private int currentLevel = 1;
+        private int currentLevel = 0;
 
         /// <summary>
         /// The condition that determines if the player wins.
@@ -64,13 +64,15 @@ namespace GD.State {
 
         void SetPlayerSpawnPoint(int doorID) {
             player.SetSpawnPoint(spawnPoints[doorID-1].transform.position);
+            currentLevel++;
         }
 
         void RespawnPlayer() {
             // .Warp()
             player.GetComponent<NavMeshAgent>().Warp(spawnPoints[currentLevel-1].transform.position);
 
-            // .SetInventory()
+            // .SetInventory(currentLevel)
+            GolfBots.State.EventManager.Instance.RaiseRefillInventory(currentLevel);
         }
 
         /// <summary>

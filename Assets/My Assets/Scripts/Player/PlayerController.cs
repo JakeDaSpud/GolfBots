@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour {
 
     void Aim(InputAction.CallbackContext context) {
         isHoldingAim = true;
-        Debug.Log("Aiming Started");
+        //Debug.Log("Aiming Started");
     }
 
     void AimCanceled(InputAction.CallbackContext context) {
@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour {
             GolfBots.State.EventManager.Instance.RaiseSetupBot();
         }
 
-        Debug.Log("Aiming Stopped");
+        //Debug.Log("Aiming Stopped");
     }
 
     bool IsOnAimableGround() {
