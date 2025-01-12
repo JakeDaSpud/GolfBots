@@ -8,8 +8,7 @@ namespace GD.State
     /// <summary>
     /// Manages the game state by evaluating win and loss conditions.
     /// </summary>
-    public class StateManager : MonoBehaviour
-    {
+    public class StateManager : MonoBehaviour {
         [FoldoutGroup("Timing & Reset")]
         [SerializeField]
         [Tooltip("Reset all conditions on start")]
@@ -24,6 +23,11 @@ namespace GD.State
         [SerializeField]
         [Tooltip("Player inventory collection to evaluate conditions required by the context")]
         private GolfBots.Player.PlayerBotInventoryController inventory;
+
+        [FoldoutGroup("Context")]
+        [SerializeField]
+        [Tooltip("Player Spawn Points to teleport the Player to")]
+        private List<GolfBots.Level.SpawnPoint> spawnPoints;
 
         /// <summary>
         /// The condition that determines if the player wins.
@@ -43,7 +47,7 @@ namespace GD.State
 
         [FoldoutGroup("Achievements [optional]")]
         [SerializeField]
-        [Tooltip("Set of optional conditions related to acheivements")]
+        [Tooltip("Set of optional conditions related to achievements")]
         private List<ConditionBase> achievementConditions;
 
         /// <summary>
@@ -59,18 +63,15 @@ namespace GD.State
                 throw new System.Exception("Player reference is required!");
 
             if (inventory == null)
-                throw new System.Exception("Inventory collection reference is required!");
+                throw new System.Exception("Player Bot Inventory reference is required!");
 
             // Wrap the two objects inside the context envelope
             conditionContext = new GolfBots.State.ConditionContext(player, inventory);
         }
 
-        private void OnDestroy()
-        {
-        }
+        private void OnDestroy() { }
 
-        private void Start()
-        {
+        private void Start() {
             if (resetAllConditionsOnStart)
                 ResetConditions();
         }

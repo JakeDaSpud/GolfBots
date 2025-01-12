@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7820410806086935055}
   - component: {fileID: 8650562582181474482}
   - component: {fileID: 3099755881548607313}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,9 +68,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  openDoor:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &2358617603118147583
 PrefabInstance:
   m_ObjectHideFlags: 0

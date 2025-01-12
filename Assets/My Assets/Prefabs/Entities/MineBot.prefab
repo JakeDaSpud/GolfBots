@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4441926860393432527}
   - component: {fileID: 2147844354532411978}
+  - component: {fileID: 8432480230264192051}
   - component: {fileID: 5165188305434783064}
   - component: {fileID: 1473666889662000871}
-  - component: {fileID: 8432480230264192051}
   m_Layer: 0
   m_Name: MineBot
   m_TagString: Bot
@@ -49,6 +49,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   botData: {fileID: 11400000, guid: aaaa48d67bbbdd54d903bb69beb74f63, type: 2}
+--- !u!114 &8432480230264192051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3864345917645375524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fac799f09b3fec42b2be200f04f6824, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!65 &5165188305434783064
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -97,18 +109,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!114 &8432480230264192051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3864345917645375524}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fac799f09b3fec42b2be200f04f6824, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &5388373466073109130
 PrefabInstance:
   m_ObjectHideFlags: 0

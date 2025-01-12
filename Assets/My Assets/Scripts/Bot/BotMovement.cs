@@ -11,7 +11,7 @@ namespace GolfBots.Bots {
         private int currentReflections;
         public Queue<Vector3> aimPoints = new Queue<Vector3>(); // Where this Bot will travel to
         private bool hasAimPointsSet = false;
-        private float closePointApproximationValue = 0.2f; // How close you have to be in all 3 Axes of a Vector3 to be considered "close"
+        private float closePointApproximationValue = 0.5f; // How close you have to be in all 3 Axes of a Vector3 to be considered "close"
         private Vector3 currentDestination;
 
         private bool canJump;
@@ -45,7 +45,7 @@ namespace GolfBots.Bots {
             }
             
             else {
-                Debug.Log($"Bot destroyed: AimPoints.Count is {aimPoints.Count}");
+                //Debug.Log($"Bot destroyed: AimPoints.Count is {aimPoints.Count}");
                 Destroy(gameObject);
             }
         }
@@ -58,9 +58,9 @@ namespace GolfBots.Bots {
                 this.aimPoints = new Queue<Vector3>();
             
             for (int i = 0; i < aimPoints.Length; i++) {
-                Debug.Log($"Point {i} : {aimPoints[i]}");
+                //Debug.Log($"Point {i} : {aimPoints[i]}");
                 this.aimPoints.Enqueue(aimPoints[i]);
-                Debug.Log("Added Point " + i);
+                //Debug.Log("Added Point " + i);
             }
 
             // Set the first point
@@ -70,7 +70,7 @@ namespace GolfBots.Bots {
                 LookAtDestination();
             }
 
-            Debug.Log($"SetAimPoints()'s final this.aimPoints.Count = {this.aimPoints.Count}");
+            //Debug.Log($"SetAimPoints()'s final this.aimPoints.Count = {this.aimPoints.Count}");
             hasAimPointsSet = true;
         }
 
@@ -106,7 +106,7 @@ namespace GolfBots.Bots {
             //transform.position += transform.forward * Time.fixedDeltaTime * moveSpeed;
             currentDestination.y = this.transform.position.y;
             Vector3 direction = (currentDestination - transform.position).normalized;
-            Debug.Log($"Direction to move: {direction}");
+            //Debug.Log($"Direction to move: {direction}");
 
             this.GetComponent<Rigidbody>().MovePosition(transform.position + direction * moveSpeed * Time.fixedDeltaTime);
         }

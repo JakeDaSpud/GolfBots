@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 namespace GolfBots.Player {
     
@@ -10,6 +9,7 @@ public class PlayerController : MonoBehaviour {
     // https://www.youtube.com/watch?v=CHV1ymlw-P8
 
     [SerializeField] public Camera cam;
+    [SerializeField] private Animator mesh;
     private PlayerInputs actions;
     // This didn't work out, I couldn't use the bool out of this for checking how I wanted in my AimRaycastController.cs class
     // public UnityEvent<bool> HoldingAim = new UnityEvent<bool>();
@@ -17,6 +17,12 @@ public class PlayerController : MonoBehaviour {
 
     void Awake() {
         actions = new PlayerInputs();
+    }
+
+    void FixedUpdate() {
+        if (GetComponent<NavMeshAgent>().velocity == Vector3.zero) {
+            mesh.SetBool("isWalking", false);
+        }
     }
 
     void OnEnable() {
@@ -43,6 +49,7 @@ public class PlayerController : MonoBehaviour {
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit)) {
+            mesh.SetBool("isWalking", true);
             this.GetComponent<NavMeshAgent>().SetDestination(hit.point);
         }
     }
@@ -56,12 +63,25 @@ public class PlayerController : MonoBehaviour {
         isHoldingAim = false;
 
         // If is standing on correct ground
-        if (true) {
-            Debug.Log("ADD THE GROUND CHECK");
+        if (IsOnAimableGround()) {
             GolfBots.State.EventManager.Instance.RaiseSetupBot();
         }
 
         Debug.Log("Aiming Stopped");
+    }
+
+    bool IsOnAimableGround() {
+        Ray ray = new Ray(this.gameObject.transform.position, Vector3.down);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit)) {
+            if (hit.collider.gameObject.layer == 9) { // Layer 9 is the Aimable Ground Layer
+                //Debug.Log("On aimable ground");
+                return true;
+            }
+        }
+        //Debug.Log("NOT on aimable ground");
+        return false;
     }
 
     void NextBot(InputAction.CallbackContext context) {
