@@ -1,5 +1,6 @@
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -28,6 +29,10 @@ namespace GD.State {
         [SerializeField]
         [Tooltip("Player Spawn Points to teleport the Player to")]
         private GolfBots.Level.SpawnPoint[] spawnPoints;
+
+        [SerializeField] private GameObject BoxPrefab;
+        // Where Boxes will be Spawned
+        [SerializeField] private GolfBots.Level.BoxLayout[] boxLayouts;
 
         public static int currentLevel = 0;
 
@@ -65,11 +70,28 @@ namespace GD.State {
         void SetPlayerSpawnPoint(int doorID) {
             player.SetSpawnPoint(spawnPoints[doorID-1].transform.position);
             currentLevel++;
+            ResetBoxes(currentLevel);
+        }
+
+        void ResetBoxes(int levelID) {
+            if (levelID == 0) {
+                return;
+            }
+
+            Debug.Log("going to spawn boxes of level " + levelID);
+
+            for (int i = 0; i < boxLayouts[levelID-1].BoxLocations.Length; i++) {
+                Instantiate(BoxPrefab, boxLayouts[levelID-1].BoxLocations[i].transform.position, boxLayouts[levelID-1].BoxLocations[i].transform.rotation);
+                Debug.Log("Spawned box in level " + boxLayouts[levelID-1].LevelID);
+            }
         }
 
         void RespawnPlayer() {
             // .Warp()
             player.GetComponent<NavMeshAgent>().Warp(spawnPoints[currentLevel-1].transform.position);
+
+            // Reset Boxes
+            ResetBoxes(currentLevel);
 
             // .SetInventory(currentLevel)
             GolfBots.State.EventManager.Instance.RaiseRefillInventory(currentLevel);

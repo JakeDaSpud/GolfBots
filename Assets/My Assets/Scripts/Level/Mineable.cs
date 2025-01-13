@@ -9,6 +9,8 @@ namespace GolfBots.Level {
             // Sound FX?
             // Particle FX?
 
+            this.gameObject.GetComponent<Collider>().enabled = false;
+
             Destroy(this.gameObject);
         }
     }

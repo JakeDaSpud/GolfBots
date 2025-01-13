@@ -64,7 +64,7 @@ public class PlayerBotInventoryController : MonoBehaviour {
     }
 
     private void RefillInventory(int levelID) {
-        SetInventory(levelID);
+        SetInventory(levelID-1);
     }
 
     void OnEnable() {

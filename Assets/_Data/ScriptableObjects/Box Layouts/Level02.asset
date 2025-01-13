@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba0fb583dc96a4e4fb888d4c89353fae, type: 3}
-  m_Name: Level03
+  m_Script: {fileID: 11500000, guid: 64ea7458b869590459d0c35e8c316a91, type: 3}
+  m_Name: Level02
   m_EditorClassIdentifier: 
-  LevelID: 3
-  MineBotCount: 2
-  JumpBotCount: 0
+  LevelID: 2
+  BoxLocations: []
