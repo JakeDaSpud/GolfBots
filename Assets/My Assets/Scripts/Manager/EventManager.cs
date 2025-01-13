@@ -17,6 +17,9 @@ public class EventManager : GD.Singleton<EventManager> {
     public event Action<GolfBots.Level.LevelInventorySetup> OnResetInventory; // On Button Press & Restart, should give Player the given level's Inventory
     public event Action<int> OnRefillInventory; // On Restart, should give Player the current level's Inventory
 
+    // UI Events
+    public event Action OnPause; // Set Pause bool to true or false
+    
     // Player Events
     public event Action OnSetupBot; // Signals that a Bot should be set up, for Spawning in front of the Player
     public event Action<GolfBots.Bots.BotType> OnBotTypeSet; // Takes BotType; Left-click succeeds, should set BotType of Bot to Spawn
@@ -30,6 +33,8 @@ public class EventManager : GD.Singleton<EventManager> {
     public void RaiseGameFinish() { OnGameFinish?.Invoke(); }
     public void RaiseResetInventory(GolfBots.Level.LevelInventorySetup newInventory) { OnResetInventory?.Invoke(newInventory); }
     public void RaiseRefillInventory(int levelID) { OnRefillInventory?.Invoke(levelID); }
+
+    public void RaisePause() { OnPause?.Invoke(); }
 
     public void RaiseSetupBot() { OnSetupBot?.Invoke(); }
     public void RaiseBotTypeSet(GolfBots.Bots.BotType type) { OnBotTypeSet?.Invoke(type); }

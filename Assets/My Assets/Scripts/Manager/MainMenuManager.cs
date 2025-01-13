@@ -14,6 +14,14 @@ public class MainMenuManager : MonoBehaviour {
     }
 
     /// <summary>
+    /// Starts the Main Menu Scene.
+    /// </summary>
+    public void MainMenu() {
+        GD.State.StateManager.Reset();
+        SceneManager.LoadSceneAsync(0);
+    }
+
+    /// <summary>
     /// Exits the game.
     /// </summary>
     public void Quit() {

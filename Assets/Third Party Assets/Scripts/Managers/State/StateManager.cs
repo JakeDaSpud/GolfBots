@@ -29,7 +29,7 @@ namespace GD.State {
         [Tooltip("Player Spawn Points to teleport the Player to")]
         private GolfBots.Level.SpawnPoint[] spawnPoints;
 
-        private int currentLevel = 0;
+        public static int currentLevel = 0;
 
         /// <summary>
         /// The condition that determines if the player wins.
@@ -104,6 +104,19 @@ namespace GD.State {
         private void Start() {
             if (resetAllConditionsOnStart)
                 ResetConditions();
+        }
+
+        public static float Playtime = 0f; // Playtime while not paused
+
+        private void Update() {
+            if (Time.timeScale != 0) {
+                Playtime += Time.deltaTime;
+            }
+        }
+
+        public static void Reset() {
+            Playtime = 0;
+            currentLevel = 0;
         }
 
         /// <summary>

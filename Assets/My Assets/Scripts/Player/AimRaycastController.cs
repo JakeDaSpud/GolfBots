@@ -1,9 +1,5 @@
 using System;
-using GolfBots.Bots;
-using GolfBots.State;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace GolfBots.Player {
     public class AimRaycastController : MonoBehaviour {
@@ -16,6 +12,7 @@ namespace GolfBots.Player {
         [SerializeField] private int maxAimReflections = 3;
 
         private Vector3[] aimPoints;
+        private bool isPaused = false;
 
         // Some Line Renderer Code was adapted from this video https://youtu.be/5ZBynjAsfwI?si=ToMuwr1NGvbByHtJ
 
@@ -40,7 +37,8 @@ namespace GolfBots.Player {
         }
 
         void Update() {
-            CheckHoldingAim(playerController.isHoldingAim);
+            if (!GolfBots.UI.UIManager.isPaused)
+                CheckHoldingAim(playerController.isHoldingAim);
         }
 
         public void CheckHoldingAim(bool isHoldingAim) {

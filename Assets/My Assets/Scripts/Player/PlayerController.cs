@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour {
         actions.Player.Scroll.performed += NextBot;
         actions.Player.Restart.Enable();
         actions.Player.Restart.performed += Restart;
+        actions.Player.Pause.Enable();
+        actions.Player.Pause.performed += Pause;
     }
 
     void OnDisable() {
@@ -48,6 +50,8 @@ public class PlayerController : MonoBehaviour {
         actions.Player.Scroll.Disable();
         actions.Player.Restart.performed -= Restart;
         actions.Player.Restart.Disable();
+        actions.Player.Pause.performed -= Pause;
+        actions.Player.Pause.Disable();
     }
 
     /// <summary>
@@ -91,6 +95,10 @@ public class PlayerController : MonoBehaviour {
         }
         //Debug.Log("NOT on aimable ground");
         return false;
+    }
+
+    private void Pause(InputAction.CallbackContext context) {
+        GolfBots.State.EventManager.Instance.RaisePause();
     }
 
     void NextBot(InputAction.CallbackContext context) {
