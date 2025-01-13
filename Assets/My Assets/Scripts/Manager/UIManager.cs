@@ -1,5 +1,7 @@
 using System;
+using GolfBots.Bots;
 using TMPro;
+using UnityEditor.U2D;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -7,15 +9,33 @@ namespace GolfBots.UI {
 
 public class UIManager : MonoBehaviour {
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject botUI;
+    [SerializeField] private Sprite[] botIcons;
 
     public static bool isPaused = false;
 
     private void OnEnable() {
         GolfBots.State.EventManager.Instance.OnPause += TryPause;
+        GolfBots.State.EventManager.Instance.OnSetBotUI += SetBotUI;
     }
 
     private void OnDisable() {
         GolfBots.State.EventManager.Instance.OnPause -= TryPause;
+        GolfBots.State.EventManager.Instance.OnSetBotUI -= SetBotUI;
+    }
+
+    private void SetBotUI(BotUIPacket botUIPacket) {
+        // Set icon
+        Transform temp = botUI.transform.Find("BotIcon");
+        UnityEngine.UI.Image botIcon = temp.gameObject.GetComponent<UnityEngine.UI.Image>();
+
+        int newIconId = botUIPacket.type == BotType.MineBot ? 0 : 1;
+        botIcon.sprite = botIcons[newIconId];
+
+        // Set amount
+        temp = botUI.transform.Find("BotAmount");
+        TMPro.TextMeshProUGUI botAmount = temp.gameObject.GetComponent<TMPro.TextMeshProUGUI>();
+        botAmount.SetText(botUIPacket.amount.ToString());
     }
 
     private void TryPause() {
@@ -28,6 +48,7 @@ public class UIManager : MonoBehaviour {
             Unpause();
     }
 
+    // Formatting taken from https://discussions.unity.com/t/making-a-timer-00-00-minutes-and-seconds/14318/4
     private void SetLevelText() {
         float playtime = GD.State.StateManager.Playtime;
         int minutes = Mathf.FloorToInt(playtime / 60F);
@@ -39,7 +60,6 @@ public class UIManager : MonoBehaviour {
         playtimeText.SetText(string.Format("{0:00}:{1:00}", minutes, seconds));
     }
 
-    // Formatting taken from https://discussions.unity.com/t/making-a-timer-00-00-minutes-and-seconds/14318/4
     private void SetPlaytimeText() {
         Transform temp = pauseMenu.transform.Find("Background/Menu/ProgrammableLevelText");
         TMPro.TextMeshProUGUI levelText = temp.gameObject.GetComponent<TMPro.TextMeshProUGUI>();

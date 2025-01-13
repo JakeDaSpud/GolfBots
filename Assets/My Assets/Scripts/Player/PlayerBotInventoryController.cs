@@ -1,6 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using GolfBots.Bots;
+using Unity.VisualScripting;
+
+namespace GolfBots.Bots {
+    public struct BotUIPacket {
+        public GolfBots.Bots.BotType type;
+        public int amount;
+
+        public BotUIPacket(BotType type, int amount) {
+            this.type = type;
+            this.amount = amount;
+        }
+    }
+}
 
 namespace GolfBots.Player {
 
@@ -28,18 +41,26 @@ public class PlayerBotInventoryController : MonoBehaviour {
             {BotType.MineBot, MineBotPrefab},
             {BotType.JumpBot, JumpBotPrefab}
         };
+
+        SetBotUI();
+    }
+
+    private void SetBotUI() {
+        GolfBots.State.EventManager.Instance.RaiseSetBotUI(new BotUIPacket(currentBot, currentBots[currentBot]));
     }
 
     private void SetInventory(int newInventoryID) {
         Debug.Log($"Setting inventory from button press {newInventoryID}");
         currentBots[BotType.MineBot] = levelInventories[newInventoryID].MineBotCount;
         currentBots[BotType.JumpBot] = levelInventories[newInventoryID].JumpBotCount;
+        SetBotUI();
     }
 
     private void SetInventory(GolfBots.Level.LevelInventorySetup newInventory) {
         Debug.Log($"Setting inventory from Reset: {newInventory}");
         currentBots[BotType.MineBot] = newInventory.MineBotCount;
         currentBots[BotType.JumpBot] = newInventory.JumpBotCount;
+        SetBotUI();
     }
 
     private void RefillInventory(int levelID) {
@@ -74,6 +95,8 @@ public class PlayerBotInventoryController : MonoBehaviour {
             currentBot = BotType.MineBot;
             Debug.Log("Current Bot is now MineBot");
         }
+
+        SetBotUI();
     }
 
     private void SendCurrentBot() {
@@ -87,6 +110,7 @@ public class PlayerBotInventoryController : MonoBehaviour {
             
             // Remove currentBot
             currentBots[currentBot]--;
+            SetBotUI();
         }
 
         else {

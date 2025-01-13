@@ -19,6 +19,7 @@ public class EventManager : GD.Singleton<EventManager> {
 
     // UI Events
     public event Action OnPause; // Set Pause bool to true or false
+    public event Action<GolfBots.Bots.BotUIPacket> OnSetBotUI; // Set the Player's Bot UI
     
     // Player Events
     public event Action OnSetupBot; // Signals that a Bot should be set up, for Spawning in front of the Player
@@ -35,6 +36,7 @@ public class EventManager : GD.Singleton<EventManager> {
     public void RaiseRefillInventory(int levelID) { OnRefillInventory?.Invoke(levelID); }
 
     public void RaisePause() { OnPause?.Invoke(); }
+    public void RaiseSetBotUI(GolfBots.Bots.BotUIPacket botUIPacket) { OnSetBotUI?.Invoke(botUIPacket); }
 
     public void RaiseSetupBot() { OnSetupBot?.Invoke(); }
     public void RaiseBotTypeSet(GolfBots.Bots.BotType type) { OnBotTypeSet?.Invoke(type); }
