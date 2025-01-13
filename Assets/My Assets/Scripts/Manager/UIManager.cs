@@ -1,9 +1,6 @@
 using System;
 using GolfBots.Bots;
-using TMPro;
-using UnityEditor.U2D;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace GolfBots.UI {
 
