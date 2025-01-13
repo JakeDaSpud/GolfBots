@@ -1,3 +1,13 @@
+2024 - GD3A - 3DGED - ICA - Jake O'Reilly
+
+repo: https://github.com/JakeDaSpud/GolfBots
+
+itch page (web build runs very slow, .exe is better < ALSO AVAILABLE ON ITCH): https://jakeoreilly.itch.io/golfbots
+
+screencast: https://youtu.be/2agNyxTMJaE
+
+---
+
 # GolfBots GDD
 
 ### Student Info
