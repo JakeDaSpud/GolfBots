@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0775d951aadede143933daf45eb4a9cd, type: 3}
-  m_Name: JumpBot
+  m_Script: {fileID: 11500000, guid: 64ea7458b869590459d0c35e8c316a91, type: 3}
+  m_Name: Level05
   m_EditorClassIdentifier: 
-  moveSpeed: 1
-  maxReflections: 2
-  canJump: 1
-  jumpPower: 7
-  jumpInterval: 1
+  LevelID: 5
+  BoxLocations: []

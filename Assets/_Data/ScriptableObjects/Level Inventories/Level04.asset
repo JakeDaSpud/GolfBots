@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Level04
   m_EditorClassIdentifier: 
   LevelID: 4
-  MineBotCount: 0
+  MineBotCount: 1
   JumpBotCount: 1
