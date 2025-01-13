@@ -16,6 +16,7 @@ public class EventManager : GD.Singleton<EventManager> {
     public event Action OnGameFinish; // Final Level Completed, should show the Player's Final Stat Screen
     public event Action<GolfBots.Level.LevelInventorySetup> OnResetInventory; // On Button Press & Restart, should give Player the given level's Inventory
     public event Action<int> OnRefillInventory; // On Restart, should give Player the current level's Inventory
+    public event Action OnWin; // When Condition ButtonPress (levelID == 7) is Met
 
     // UI Events
     public event Action OnPause; // Set Pause bool to true or false
@@ -34,6 +35,7 @@ public class EventManager : GD.Singleton<EventManager> {
     public void RaiseGameFinish() { OnGameFinish?.Invoke(); }
     public void RaiseResetInventory(GolfBots.Level.LevelInventorySetup newInventory) { OnResetInventory?.Invoke(newInventory); }
     public void RaiseRefillInventory(int levelID) { OnRefillInventory?.Invoke(levelID); }
+    public void RaiseWin() { OnWin?.Invoke(); }
 
     public void RaisePause() { OnPause?.Invoke(); }
     public void RaiseSetBotUI(GolfBots.Bots.BotUIPacket botUIPacket) { OnSetBotUI?.Invoke(botUIPacket); }

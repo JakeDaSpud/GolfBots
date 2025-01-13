@@ -9,8 +9,14 @@ public class Button : MonoBehaviour {
     void OnTriggerEnter(Collider collisionObject) {
         if (collisionObject.gameObject.tag == "Bot") {
             Debug.Log($"Pressed button {id}");
-            GolfBots.State.EventManager.Instance.RaiseButtonPress(id);
-            GetComponent<Collider>().enabled = false;
+
+            if (id == 7) {
+                GolfBots.State.EventManager.Instance.RaiseWin();
+            }
+            else {
+                GolfBots.State.EventManager.Instance.RaiseButtonPress(id);
+                GetComponent<Collider>().enabled = false;
+            }
         }
     }
 }

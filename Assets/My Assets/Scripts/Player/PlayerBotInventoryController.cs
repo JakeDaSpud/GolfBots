@@ -50,6 +50,9 @@ public class PlayerBotInventoryController : MonoBehaviour {
     }
 
     private void SetInventory(int newInventoryID) {
+        if (newInventoryID == 7) {
+            return;
+        }
         Debug.Log($"Setting inventory from button press {newInventoryID}");
         currentBots[BotType.MineBot] = levelInventories[newInventoryID].MineBotCount;
         currentBots[BotType.JumpBot] = levelInventories[newInventoryID].JumpBotCount;
@@ -125,6 +128,7 @@ public class PlayerBotInventoryController : MonoBehaviour {
         
         GameObject spawnedBot = Instantiate(botToSpawn, this.gameObject.transform.position, this.gameObject.transform.rotation);
         spawnedBot.GetComponent<BotMovement>().SetAimPoints(aimPoints);
+        GD.State.StateManager.BotsUsed++;
     }
 }
 

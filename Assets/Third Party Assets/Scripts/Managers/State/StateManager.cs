@@ -1,6 +1,6 @@
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -68,13 +68,16 @@ namespace GD.State {
         }
 
         void SetPlayerSpawnPoint(int doorID) {
+            if (doorID == 7) {
+                return;
+            }
             player.SetSpawnPoint(spawnPoints[doorID-1].transform.position);
             currentLevel++;
             ResetBoxes(currentLevel);
         }
 
         void ResetBoxes(int levelID) {
-            if (levelID == 0) {
+            if (levelID == 0 && levelID == 8) {
                 return;
             }
 
@@ -95,6 +98,8 @@ namespace GD.State {
 
             // .SetInventory(currentLevel)
             GolfBots.State.EventManager.Instance.RaiseRefillInventory(currentLevel);
+
+            Restarts++;
         }
 
         /// <summary>
@@ -129,6 +134,8 @@ namespace GD.State {
         }
 
         public static float Playtime = 0f; // Playtime while not paused
+        public static int Restarts = 0; // Total Restarts
+        public static int BotsUsed = 0; // Total Bots aimed AND sent
 
         private void Update() {
             if (Time.timeScale != 0) {
@@ -138,6 +145,8 @@ namespace GD.State {
 
         public static void Reset() {
             Playtime = 0;
+            Restarts = 0;
+            BotsUsed = 0;
             currentLevel = 0;
         }
 
@@ -183,7 +192,8 @@ namespace GD.State {
         /// </summary>
         protected virtual void HandleWin()
         {
-            Debug.Log($"Player Wins! Win condition met at {winCondition.TimeMet} seconds.");
+            //Debug.Log($"Player Wins! Win condition met at {winCondition.TimeMet} seconds.");
+            GolfBots.State.EventManager.Instance.RaiseWin();
 
             // Implement win logic here, such as:
             // - Displaying a victory screen
