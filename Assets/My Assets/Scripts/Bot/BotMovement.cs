@@ -151,6 +151,7 @@ namespace GolfBots.Bots {
 
         void Jump() {
             Debug.Log(this.name + " is jumping");
+            this.GetComponent<Rigidbody>().AddForce(Vector3.up * jumpPower + this.transform.forward * (jumpPower/2), ForceMode.Impulse);
         }
     }
 }
