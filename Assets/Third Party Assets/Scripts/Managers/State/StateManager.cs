@@ -32,7 +32,7 @@ namespace GD.State {
 
         [SerializeField] private GameObject BoxPrefab;
         // Where Boxes will be Spawned
-        [SerializeField] private GolfBots.Level.BoxLayout[] boxLayouts;
+        [SerializeField] private GolfBots.Level.BoxLayoutSO[] boxLayouts;
 
         public static int currentLevel = 0;
 
@@ -84,7 +84,7 @@ namespace GD.State {
             Debug.Log("going to spawn boxes of level " + levelID);
 
             for (int i = 0; i < boxLayouts[levelID-1].BoxLocations.Length; i++) {
-                Instantiate(BoxPrefab, boxLayouts[levelID-1].BoxLocations[i].transform.position, boxLayouts[levelID-1].BoxLocations[i].transform.rotation);
+                Instantiate(BoxPrefab, boxLayouts[levelID-1].BoxLocations[i], Quaternion.identity);
                 Debug.Log("Spawned box in level " + boxLayouts[levelID-1].LevelID);
             }
         }

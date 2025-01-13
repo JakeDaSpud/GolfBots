@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelID: 7
   BoxLocations:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {x: 15.5, y: 1.5, z: 43}
+  - {x: 15.5, y: 1.5, z: 44}
+  - {x: 15.5, y: 1.5, z: 45}
+  - {x: 15.5, y: 2, z: 43}
+  - {x: 15.5, y: 2, z: 44}
+  - {x: 15.5, y: 2, z: 45}
+  - {x: 17, y: 1.5, z: 46}
+  - {x: 17, y: 2, z: 46}
+  - {x: 18, y: 1.5, z: 46}
+  - {x: 18, y: 2, z: 46}
+  - {x: 19, y: 1.5, z: 46}
+  - {x: 19, y: 2, z: 46}
